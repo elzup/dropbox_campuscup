@@ -5,12 +5,14 @@ import code
 import json
 from bs4 import BeautifulSoup
 
-query = "{your session}"
-commands.getoutput(query)
-f = gzip.open('tmp.gz', 'rb')
-html = ''.join(f.readlines())
-f.close()
 
+with open('session.curl', 'r') as f:
+  query = f.read().rstrip()
+  print(query)
+commands.getoutput(query)
+
+with gzip.open('tmp.gz', 'rb') as f:
+  html = ''.join(f.readlines())
 
 regex = 'StudentPromoDashboardController, ({.*}), null'
 m = re.search(regex, html)
